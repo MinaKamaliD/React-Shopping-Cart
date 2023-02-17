@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 50px;
+  margin-top: 50px;
+  margin-bottom: 80px;
+}
+span {
+  color: #e03131;
+  font-size: 60px;
+}
