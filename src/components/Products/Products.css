@@ -11,3 +11,51 @@
   row-gap: 100px;
   justify-content: center;
 }
+.list-title {
+  text-align: center;
+  margin: 20px 0;
+}
+.table {
+  margin: 0 auto;
+}
+th {
+  background-color: #ffc9c9;
+  text-align: center;
+  padding: 10px 80px;
+  border-radius: 10px;
+}
+.selected {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.price {
+  text-align: center;
+  font-size: 20px;
+}
+.btn {
+  text-align: center;
+}
+.btn button {
+  background-color: #ffc9c9;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.empty-button {
+  font-size: 14px;
+  background-color: #ffc9c9;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #e03131;
+}
+.button {
+  text-align: center;
+  margin-right: 22px;
+  margin-top: 30px;
+}

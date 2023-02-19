@@ -66,7 +66,7 @@ class Products extends Component {
           ))}
         </div>
         <h2 className="list-title">Shopping List</h2>
-        <table>
+        <table className="table">
           <thead>
             <tr>
               <th>Item</th>
@@ -74,20 +74,33 @@ class Products extends Component {
               <th>Remove</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="row">
             {this.state.products.map((product) => (
               <tr key={product.id}>
-                <td>{<img src={product.src} style={{ width: 60 }} />}</td>
-                <td>{product.title}</td>
-                <td>{product.price}</td>
-                <button onClick={this.onRemoveHandler.bind(this, product.id)}>
-                  Remove
-                </button>
+                <td className="selected">
+                  {
+                    <img
+                      src={product.src}
+                      style={{ width: 60, marginRight: 10 }}
+                    />
+                  }
+                  {product.title}
+                </td>
+                <td className="price">${product.price}</td>
+                <td className="btn">
+                  <button onClick={this.onRemoveHandler.bind(this, product.id)}>
+                    Remove
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
-          <button onClick={this.emptyListHandler}>Empty The List</button>
         </table>
+        <div className="button">
+          <button className="empty-button" onClick={this.emptyListHandler}>
+            Empty The List
+          </button>
+        </div>
       </>
     );
   }
