@@ -32,24 +32,23 @@ class Products extends Component {
   constructor() {
     super();
     this.state = {
-      productTitle: "",
-      productSrc: "",
-      productPrice: "",
       products: [],
     };
     this.addToCart = this.addToCart.bind(this);
-    this.onRemoveHandler = this.onRemoveHandler.bind(this);
     this.emptyListHandler = this.emptyListHandler.bind(this);
   }
   addToCart(productId) {
     productInfo.map((item) => {
       if (item.id === productId) {
-        this.setState({ products: [...this.state.products, item] });
+        this.setState((prevState) => {
+          return { products: [...prevState.products, item] };
+        });
       }
     });
   }
-  onRemoveHandler(event) {
-    event.target.parentElement.remove();
+  onRemoveHandler(id) {
+    let leftProducts = this.state.products.filter((item) => item.id !== id);
+    this.setState({ products: leftProducts });
   }
   emptyListHandler() {
     this.setState({ products: [] });
@@ -81,7 +80,9 @@ class Products extends Component {
                 <td>{<img src={product.src} style={{ width: 60 }} />}</td>
                 <td>{product.title}</td>
                 <td>{product.price}</td>
-                <button onClick={this.onRemoveHandler}>Remove</button>
+                <button onClick={this.onRemoveHandler.bind(this, product.id)}>
+                  Remove
+                </button>
               </tr>
             ))}
           </tbody>
