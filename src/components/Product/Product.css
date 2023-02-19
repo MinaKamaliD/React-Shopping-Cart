@@ -43,11 +43,11 @@
   cursor: pointer;
   border: none;
   overflow: hidden;
-  background-color: #e03131;
+  background-color: #fa5252;
   position: absolute;
   bottom: 0;
 }
 .add-btn:hover {
-  background-color: #c92a2a;
+  background-color: #f03e3e;
   transition: all linear 0.1s;
 }

@@ -52,7 +52,11 @@ th {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-  background-color: #e03131;
+  background-color: #fa5252;
+  transition: all linear 0.1s;
+}
+.empty-button:hover {
+  background-color: #f03e3e;
 }
 .button {
   text-align: center;
