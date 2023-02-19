@@ -31,15 +31,63 @@ const productInfo = [
 class Products extends Component {
   constructor() {
     super();
+    this.state = {
+      productTitle: "",
+      productSrc: "",
+      productPrice: "",
+      products: [],
+    };
+    this.addToCart = this.addToCart.bind(this);
+    this.onRemoveHandler = this.onRemoveHandler.bind(this);
+    this.emptyListHandler = this.emptyListHandler.bind(this);
   }
-
+  addToCart(productId) {
+    productInfo.map((item) => {
+      if (item.id === productId) {
+        this.setState({ products: [...this.state.products, item] });
+      }
+    });
+  }
+  onRemoveHandler(event) {
+    event.target.parentElement.remove();
+  }
+  emptyListHandler() {
+    this.setState({ products: [] });
+  }
   render() {
     return (
-      <div className="products">
-        {productInfo.map((product) => (
-          <Product {...product} key={product.id} />
-        ))}
-      </div>
+      <>
+        <div className="products">
+          {productInfo.map((product) => (
+            <Product
+              {...product}
+              key={product.id}
+              onAddProduct={this.addToCart}
+            />
+          ))}
+        </div>
+        <h2 className="list-title">Shopping List</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.products.map((product) => (
+              <tr key={product.id}>
+                <td>{<img src={product.src} style={{ width: 60 }} />}</td>
+                <td>{product.title}</td>
+                <td>{product.price}</td>
+                <button onClick={this.onRemoveHandler}>Remove</button>
+              </tr>
+            ))}
+          </tbody>
+          <button onClick={this.emptyListHandler}>Empty The List</button>
+        </table>
+      </>
     );
   }
 }
