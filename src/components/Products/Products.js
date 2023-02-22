@@ -1,7 +1,8 @@
 import React from "react";
 import "./Products.css";
-import { Component } from "react";
 import Product from "../Product/Product";
+import { useState } from "react";
+// import { Component } from "react";
 
 const productInfo = [
   { id: 1, title: "Garmin vivomove", src: "./watches/1.jpg", price: 269.99 },
@@ -28,81 +29,150 @@ const productInfo = [
   { id: 12, title: "Garmin Lily", src: "./watches/12.jpg", price: 29.99 },
 ];
 
-class Products extends Component {
-  constructor() {
-    super();
-    this.state = {
-      products: [],
-    };
-    this.addToCart = this.addToCart.bind(this);
-    this.emptyListHandler = this.emptyListHandler.bind(this);
-  }
-  addToCart(productId) {
+//////////// Functional Component ////////////////////////////////////////
+
+const Products = () => {
+  const [products, setProducts] = useState([]);
+
+  const addToCart = (productId) => {
     productInfo.map((item) => {
       if (item.id === productId) {
-        this.setState((prevState) => {
-          return { products: [...prevState.products, item] };
-        });
+        setProducts((prevState) => [...prevState, item]);
       }
     });
-  }
-  onRemoveHandler(id) {
-    let leftProducts = this.state.products.filter((item) => item.id !== id);
-    this.setState({ products: leftProducts });
-  }
-  emptyListHandler() {
-    this.setState({ products: [] });
-  }
-  render() {
-    return (
-      <>
-        <div className="products">
-          {productInfo.map((product) => (
-            <Product
-              {...product}
-              key={product.id}
-              onAddProduct={this.addToCart}
-            />
-          ))}
-        </div>
-        <h2 className="list-title">Shopping List</h2>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Price</th>
-              <th>Remove</th>
+  };
+  const onRemoveHandler = (id) => {
+    let leftProducts = products.filter((item) => item.id !== id);
+    setProducts(leftProducts);
+  };
+  const emptyListHandler = () => {
+    setProducts([]);
+  };
+
+  return (
+    <>
+      <div className="products">
+        {productInfo.map((product) => (
+          <Product {...product} key={product.id} onAddProduct={addToCart} />
+        ))}
+      </div>
+      <h2 className="list-title">Shopping List</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody className="row">
+          {products.map((product) => (
+            <tr key={product.id}>
+              <td className="selected">
+                {
+                  <img
+                    src={product.src}
+                    style={{ width: 60, marginRight: 10 }}
+                  />
+                }
+                {product.title}
+              </td>
+              <td className="price">${product.price}</td>
+              <td className="btn">
+                <button onClick={() => onRemoveHandler(product.id)}>
+                  Remove
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody className="row">
-            {this.state.products.map((product) => (
-              <tr key={product.id}>
-                <td className="selected">
-                  {
-                    <img
-                      src={product.src}
-                      style={{ width: 60, marginRight: 10 }}
-                    />
-                  }
-                  {product.title}
-                </td>
-                <td className="price">${product.price}</td>
-                <td className="btn">
-                  <button onClick={this.onRemoveHandler.bind(this, product.id)}>
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="button">
-          <button className="empty-button" onClick={this.emptyListHandler}>
-            Empty The List
-          </button>
-        </div>
-      </>
-    );
-  }
-}
+          ))}
+        </tbody>
+      </table>
+      <div className="button">
+        <button className="empty-button" onClick={emptyListHandler}>
+          Empty The List
+        </button>
+      </div>
+    </>
+  );
+};
+
+//////////// Class Component ////////////////////////////////////////
+
+// class Products extends Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       products: [],
+//     };
+//     this.addToCart = this.addToCart.bind(this);
+//     this.emptyListHandler = this.emptyListHandler.bind(this);
+//   }
+//   addToCart(productId) {
+//     productInfo.map((item) => {
+//       if (item.id === productId) {
+//         this.setState((prevState) => {
+//           return { products: [...prevState.products, item] };
+//         });
+//       }
+//     });
+//   }
+//   onRemoveHandler(id) {
+//     let leftProducts = this.state.products.filter((item) => item.id !== id);
+//     this.setState({ products: leftProducts });
+//   }
+//   emptyListHandler() {
+//     this.setState({ products: [] });
+//   }
+//   render() {
+//     return (
+//       <>
+//         <div className="products">
+//           {productInfo.map((product) => (
+//             <Product
+//               {...product}
+//               key={product.id}
+//               onAddProduct={this.addToCart}
+//             />
+//           ))}
+//         </div>
+//         <h2 className="list-title">Shopping List</h2>
+//         <table className="table">
+//           <thead>
+//             <tr>
+//               <th>Item</th>
+//               <th>Price</th>
+//               <th>Remove</th>
+//             </tr>
+//           </thead>
+//           <tbody className="row">
+//             {this.state.products.map((product) => (
+//               <tr key={product.id}>
+//                 <td className="selected">
+//                   {
+//                     <img
+//                       src={product.src}
+//                       style={{ width: 60, marginRight: 10 }}
+//                     />
+//                   }
+//                   {product.title}
+//                 </td>
+//                 <td className="price">${product.price}</td>
+//                 <td className="btn">
+//                   <button onClick={this.onRemoveHandler.bind(this, product.id)}>
+//                     Remove
+//                   </button>
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//         <div className="button">
+//           <button className="empty-button" onClick={this.emptyListHandler}>
+//             Empty The List
+//           </button>
+//         </div>
+//       </>
+//     );
+//   }
+// }
 export default Products;
